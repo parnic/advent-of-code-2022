@@ -1,0 +1,25 @@
+﻿namespace aoc2022;
+
+internal class DayTemplate : Day
+{
+    IEnumerable<string>? lines;
+
+    internal override void Parse()
+    {
+        lines = Util.ReadAllLines("inputs/##.txt");
+    }
+
+    internal override string Part1()
+    {
+
+
+        return $"<+white>";
+    }
+
+    internal override string Part2()
+    {
+
+
+        return $"<+white>";
+    }
+}
