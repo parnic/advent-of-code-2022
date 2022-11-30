@@ -32,14 +32,8 @@ foreach (var arg in args)
 
 if (runPart1 != null || runPart2 != null)
 {
-    if (runPart1 == null)
-    {
-        runPart1 = false;
-    }
-    if (runPart2 == null)
-    {
-        runPart2 = false;
-    }
+    runPart1 ??= false;
+    runPart2 ??= false;
 }
 
 if (runAll)
@@ -59,7 +53,7 @@ else
     }
     else
     {
-        var type = types.FirstOrDefault(x => x.Name == $"Day{desiredDay?.PadLeft(2, '0')}");
+        var type = types.FirstOrDefault(x => x.Name == $"Day{desiredDay.PadLeft(2, '0')}");
         if (type == null)
         {
             Logger.Log($"Unknown day <cyan>{desiredDay}<r>");
