@@ -7,6 +7,7 @@ namespace aoc2022;
 internal static class Util
 {
     private static readonly char[] StripPreamble = { (char)8745, (char)9559, (char)9488, };
+    private static readonly Encoding[] StripBOMsFromEncodings = { Encoding.UTF8, Encoding.Unicode, Encoding.BigEndianUnicode, };
     private static void ReadData(string inputName, Action<string> processor)
     {
         if (Console.IsInputRedirected)
@@ -16,14 +17,19 @@ internal static class Util
             {
                 if (i == 0)
                 {
-                    var preamble = Encoding.UTF8.GetPreamble();
-                    if (line[0..preamble.Length].SequenceEqual(preamble.Select(x => (char)x)))
-                    {
-                        line = line[preamble.Length..];
-                    }
-                    else if (line[0..StripPreamble.Length].ToCharArray().SequenceEqual(StripPreamble))
+                    if (line[0..StripPreamble.Length].SequenceEqual(StripPreamble))
                     {
                         line = line[StripPreamble.Length..];
+                    }
+                    else
+                    {
+                        foreach (var encoding in StripBOMsFromEncodings)
+                        {
+                            if (line.StartsWith(encoding.GetString(encoding.GetPreamble()), StringComparison.Ordinal))
+                            {
+                                line = line[encoding.GetPreamble().Length..];
+                            }
+                        }
                     }
                 }
                 processor(line);
