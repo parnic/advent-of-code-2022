@@ -46,6 +46,8 @@ internal static class Util
             {
                 processor(line);
             }
+
+            return;
         }
 
         // typeof(Util) is not technically correct since what we need is the "default namespace,"
