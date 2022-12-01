@@ -2,61 +2,32 @@
 
 internal class Day01 : Day
 {
-    IEnumerable<string>? lines;
+    List<List<int>> lines = new();
 
     internal override void Parse()
     {
-        lines = Util.ReadAllLines("01");
+        List<int> calories = new();
+        foreach (var line in Util.ReadAllLines("01"))
+        {
+            if (string.IsNullOrEmpty(line))
+            {
+                lines.Add(new(calories));
+                calories.Clear();
+                continue;
+            }
+
+            calories.Add(int.Parse(line));
+        }
+        lines.Add(new(calories));
     }
 
     internal override string Part1()
     {
-        int lastDepth = 0;
-        int numIncreased = -1;
-
-        foreach (var line in lines!)
-        {
-            var depth = Convert.ToInt32(line);
-            if (depth > lastDepth)
-            {
-                numIncreased++;
-            }
-
-            lastDepth = depth;
-        }
-
-        return $"<+white>{numIncreased}";
+        return $"Most calories: <+white>{lines.Max(x => x.Sum())}";
     }
 
     internal override string Part2()
     {
-        int lastTotal = 0;
-        int numIncreased = -1;
-        int num1 = -1;
-        int num2 = -1;
-        int num3 = -1;
-
-        foreach (var line in lines!)
-        {
-            var depth = Convert.ToInt32(line);
-            num1 = num2;
-            num2 = num3;
-            num3 = depth;
-
-            if (num1 < 0 || num2 < 0 || num3 < 0)
-            {
-                continue;
-            }
-
-            var total = num1 + num2 + num3;
-            if (total > lastTotal)
-            {
-                numIncreased++;
-            }
-
-            lastTotal = total;
-        }
-
-        return $"<+white>{numIncreased}";
+        return $"Sum of top 3: <+white>{lines.OrderByDescending(x => x.Sum()).Take(3).Sum(x => x.Sum())}";
     }
 }
