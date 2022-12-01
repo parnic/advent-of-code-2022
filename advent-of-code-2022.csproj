@@ -21,78 +21,56 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Update="inputs\01.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="inputs\02.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="inputs\03.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="inputs\05.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="inputs\06.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="inputs\07.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="inputs\08.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="inputs\09.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="inputs\10.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="inputs\11.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="inputs\12.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="inputs\13.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="inputs\14.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="inputs\15.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="inputs\16.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="inputs\17.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="inputs\18.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="inputs\19.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="inputs\20.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="inputs\21.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="inputs\22.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="inputs\23.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="inputs\24.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="inputs\25.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
+	  <None Remove="inputs\01.txt" />
+	  <EmbeddedResource Include="inputs\01.txt" />
+	  <None Remove="inputs\02.txt" />
+	  <EmbeddedResource Include="inputs\02.txt" />
+	  <None Remove="inputs\03.txt" />
+	  <EmbeddedResource Include="inputs\03.txt" />
+	  <None Remove="inputs\04.txt" />
+	  <EmbeddedResource Include="inputs\04.txt" />
+	  <None Remove="inputs\05.txt" />
+	  <EmbeddedResource Include="inputs\05.txt" />
+	  <None Remove="inputs\06.txt" />
+	  <EmbeddedResource Include="inputs\06.txt" />
+	  <None Remove="inputs\07.txt" />
+	  <EmbeddedResource Include="inputs\07.txt" />
+	  <None Remove="inputs\08.txt" />
+	  <EmbeddedResource Include="inputs\08.txt" />
+	  <None Remove="inputs\09.txt" />
+	  <EmbeddedResource Include="inputs\09.txt" />
+	  <None Remove="inputs\10.txt" />
+	  <EmbeddedResource Include="inputs\10.txt" />
+	  <None Remove="inputs\11.txt" />
+	  <EmbeddedResource Include="inputs\11.txt" />
+	  <None Remove="inputs\12.txt" />
+	  <EmbeddedResource Include="inputs\12.txt" />
+	  <None Remove="inputs\13.txt" />
+	  <EmbeddedResource Include="inputs\13.txt" />
+	  <None Remove="inputs\14.txt" />
+	  <EmbeddedResource Include="inputs\14.txt" />
+	  <None Remove="inputs\15.txt" />
+	  <EmbeddedResource Include="inputs\15.txt" />
+	  <None Remove="inputs\16.txt" />
+	  <EmbeddedResource Include="inputs\16.txt" />
+	  <None Remove="inputs\17.txt" />
+	  <EmbeddedResource Include="inputs\17.txt" />
+	  <None Remove="inputs\18.txt" />
+	  <EmbeddedResource Include="inputs\18.txt" />
+	  <None Remove="inputs\19.txt" />
+	  <EmbeddedResource Include="inputs\19.txt" />
+	  <None Remove="inputs\20.txt" />
+	  <EmbeddedResource Include="inputs\20.txt" />
+	  <None Remove="inputs\21.txt" />
+	  <EmbeddedResource Include="inputs\21.txt" />
+	  <None Remove="inputs\22.txt" />
+	  <EmbeddedResource Include="inputs\22.txt" />
+	  <None Remove="inputs\23.txt" />
+	  <EmbeddedResource Include="inputs\23.txt" />
+	  <None Remove="inputs\24.txt" />
+	  <EmbeddedResource Include="inputs\24.txt" />
+	  <None Remove="inputs\25.txt" />
+	  <EmbeddedResource Include="inputs\25.txt" />
 	</ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Reflection;
 using System.Text;
 
 namespace aoc2022;
@@ -6,7 +7,7 @@ namespace aoc2022;
 internal static class Util
 {
     private static readonly char[] StripPreamble = new char[] { (char)8745, (char)9559, (char)9488, };
-    internal static void ReadData(string filename, Action<string> processor)
+    internal static void ReadData(string inputName, Action<string> processor)
     {
         if (Console.IsInputRedirected)
         {
@@ -39,9 +40,24 @@ internal static class Util
             }
         }
 
-        foreach (var line in File.ReadLines(filename))
+        var filename = $"inputs/{inputName}.txt";
+        if (File.Exists(filename))
         {
-            processor(line);
+            foreach (var line in File.ReadLines(filename))
+            {
+                processor(line);
+            }
+        }
+
+        // typeof(Util) is not technically correct since what we need is the "default namespace,"
+        // but "default namespace" is a Project File concept, not a C#/.NET concept, so it's not
+        // accessible at runtime. instead, we assume Util is also part of the "default namespace"
+        var resourceName = $"{typeof(Util).Namespace}.inputs.{inputName}.txt";
+        using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName);
+        using StreamReader reader = new(stream!);
+        while (reader.ReadLine() is { } readLine)
+        {
+            processor(readLine);
         }
     }
 

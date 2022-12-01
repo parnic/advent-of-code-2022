@@ -6,7 +6,7 @@ internal class DayTemplate : Day
 
     internal override void Parse()
     {
-        lines = Util.ReadAllLines("inputs/##.txt");
+        lines = Util.ReadAllLines("##");
     }
 
     internal override string Part1()
