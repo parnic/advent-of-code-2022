@@ -6,23 +6,22 @@ namespace aoc2022;
 
 internal static class Util
 {
-    private static readonly char[] StripPreamble = new char[] { (char)8745, (char)9559, (char)9488, };
-    internal static void ReadData(string inputName, Action<string> processor)
+    private static readonly char[] StripPreamble = { (char)8745, (char)9559, (char)9488, };
+    private static void ReadData(string inputName, Action<string> processor)
     {
         if (Console.IsInputRedirected)
         {
-            string? line;
             bool processedSomething = false;
-            for (int i = 0; (line = Console.In.ReadLine()) != null; i++)
+            for (int i = 0; Console.In.ReadLine() is { } line; i++)
             {
                 if (i == 0)
                 {
                     var preamble = Encoding.UTF8.GetPreamble();
-                    if (Enumerable.SequenceEqual(line[0..preamble.Length], preamble.Select(x => (char)x)))
+                    if (line[0..preamble.Length].SequenceEqual(preamble.Select(x => (char)x)))
                     {
                         line = line[preamble.Length..];
                     }
-                    else if (Enumerable.SequenceEqual(line[0..StripPreamble.Length].ToCharArray(), StripPreamble))
+                    else if (line[0..StripPreamble.Length].ToCharArray().SequenceEqual(StripPreamble))
                     {
                         line = line[StripPreamble.Length..];
                     }
@@ -92,7 +91,7 @@ internal static class Util
 
     internal static void TestCondition(Func<bool> a, bool printResult = true)
     {
-        if (a?.Invoke() == false)
+        if (a.Invoke() == false)
         {
             Debug.Assert(false);
             if (printResult)
