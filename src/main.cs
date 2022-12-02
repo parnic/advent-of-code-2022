@@ -49,7 +49,7 @@ else
     Day? day = null;
     if (string.IsNullOrEmpty(desiredDay))
     {
-        day = new Day01();
+        day = (Day)Activator.CreateInstance(types.Last())!;
     }
     else
     {
