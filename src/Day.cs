@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace aoc2022;
+﻿namespace aoc2022;
 
 internal abstract class Day : IDisposable
 {
@@ -13,7 +11,7 @@ internal abstract class Day : IDisposable
     {
         Logger.Log($"<reverse>{GetType().Name}<r>");
 
-        using (var parseStopwatch = new Timer("Parsing"))
+        using (new Timer("Parsing"))
         {
             Parse();
         }

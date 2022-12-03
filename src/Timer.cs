@@ -6,7 +6,7 @@ internal class Timer : IDisposable
 {
     private readonly Stopwatch stopwatch = Stopwatch.StartNew();
     private readonly string? name;
-    private bool stopped = false;
+    private bool stopped;
     public bool Disabled { get; set; }
 
     public Timer(string? inName = null)

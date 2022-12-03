@@ -1,4 +1,5 @@
-﻿namespace aoc2022;
+﻿// ReSharper disable All
+namespace aoc2022;
 
 internal class DayTemplate : Day
 {
