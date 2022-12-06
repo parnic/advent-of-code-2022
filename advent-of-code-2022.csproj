@@ -36,6 +36,7 @@
 	  <None Remove="inputs\06.txt" />
 	  <EmbeddedResource Include="inputs\06.txt" />
 	  <None Remove="inputs\07.txt" />
+	  <EmbeddedResource Include="inputs\06a.txt" />
 	  <EmbeddedResource Include="inputs\07.txt" />
 	  <None Remove="inputs\08.txt" />
 	  <EmbeddedResource Include="inputs\08.txt" />
