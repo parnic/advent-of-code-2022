@@ -6,7 +6,7 @@ internal class Day03 : Day
 
     internal override void Parse()
     {
-        sacks = Util.ReadAllLines("03");
+        sacks = Util.Parsing.ReadAllLines("03");
     }
 
     static int GetPriority(char x) => x <= 'Z' ? x - 'A' + 27 : x - 'a' + 1;

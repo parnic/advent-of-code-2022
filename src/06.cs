@@ -6,7 +6,7 @@ internal class Day06 : Day
 
     internal override void Parse()
     {
-        buffer = Util.ReadAllText("06");
+        buffer = Util.Parsing.ReadAllText("06");
     }
 
     private static int FindDistinct(string buf, int distinctLen)

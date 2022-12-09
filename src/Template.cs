@@ -3,11 +3,9 @@ namespace aoc2022;
 
 internal class DayTemplate : Day
 {
-    IEnumerable<string>? lines;
-
     internal override void Parse()
     {
-        lines = Util.ReadAllLines("##");
+        var lines = Util.Parsing.ReadAllLines("##");
     }
 
     internal override string Part1()

@@ -7,7 +7,7 @@ internal class Day01 : Day
     internal override void Parse()
     {
         List<int> calories = new();
-        foreach (var line in Util.ReadAllLines("01"))
+        foreach (var line in Util.Parsing.ReadAllLines("01"))
         {
             if (string.IsNullOrEmpty(line))
             {

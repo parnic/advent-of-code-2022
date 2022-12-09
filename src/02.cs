@@ -6,7 +6,7 @@ internal class Day02 : Day
 
     internal override void Parse()
     {
-        lines = Util.ReadAllLines("02");
+        lines = Util.Parsing.ReadAllLines("02");
     }
 
     internal override string Part1()

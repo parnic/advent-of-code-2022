@@ -17,7 +17,7 @@ internal class Day05 : Day
     internal override void Parse()
     {
         int state = 0;
-        foreach (var line in Util.ReadAllLines("05"))
+        foreach (var line in Util.Parsing.ReadAllLines("05"))
         {
             if (state == 0)
             {

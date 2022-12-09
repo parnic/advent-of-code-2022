@@ -6,7 +6,7 @@ internal class Day04 : Day
 
     internal override void Parse()
     {
-        foreach (var line in Util.ReadAllLines("04"))
+        foreach (var line in Util.Parsing.ReadAllLines("04"))
         {
             var assignments = line.Split(',');
             var firstAssignment = assignments[0].Split('-');

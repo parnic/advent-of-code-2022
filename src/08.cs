@@ -6,7 +6,7 @@ internal class Day08 : Day
 
     internal override void Parse()
     {
-        var lines = new List<string>(Util.ReadAllLines("08"));
+        var lines = new List<string>(Util.Parsing.ReadAllLines("08"));
         trees = new int[lines.Count][];
         for (int i = 0; i < lines.Count; i++)
         {
