@@ -27,7 +27,7 @@ internal static class Util
                         {
                             if (line.StartsWith(encoding.GetString(encoding.GetPreamble()), StringComparison.Ordinal))
                             {
-                                line = line[encoding.GetPreamble().Length..];
+                                line = line.Replace(encoding.GetString(encoding.GetPreamble()), "", StringComparison.Ordinal);
                             }
                         }
                     }
