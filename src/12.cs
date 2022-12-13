@@ -35,9 +35,7 @@ internal class Day12 : Day
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return neighbors.Equals(other.neighbors)
-                   && distance == other.distance
-                   && location.Equals(other.location);
+            return location.Equals(other.location);
         }
 
         public override bool Equals(object? obj)
@@ -67,7 +65,7 @@ internal class Day12 : Day
             location = loc;
         }
 
-        public override int GetHashCode() => HashCode.Combine(neighbors, location);
+        public override int GetHashCode() => location.GetHashCode();
         public override string ToString() => $"{location}, {neighbors.Count} neighbor{(neighbors.Count == 1 ? "" : "s")}, dist: {distance ?? -1}";
     }
 
@@ -111,17 +109,16 @@ internal class Day12 : Day
                 }
 
                 heights[x][y] = ch - 'a';
+                allNodes.Add(new DNode(new point(x, y)));
             }
         }
 
         startNode = new DNode(start!);
-        allNodes.Add(startNode);
 
         var unvisited = new HashSet<DNode>(allNodes);
         DNode? current = startNode;
         while (current != null)
         {
-            var currHeight = heights[current.location.x][current.location.y];
             foreach (var offset in offsets)
             {
                 var test = current.location + offset;
@@ -130,18 +127,8 @@ internal class Day12 : Day
                     continue;
                 }
 
-                var testHeight = heights[test.x][test.y];
-                if (testHeight <= currHeight + 1)
-                {
-                    var found = allNodes.FirstOrDefault(n => n.location == test);
-                    if (found == null)
-                    {
-                        found = new DNode(test);
-                        allNodes.Add(found);
-                        unvisited.Add(found);
-                    }
-                    current.neighbors.Add(found);
-                }
+                var found = allNodes.First(n => n.location == test);
+                current.neighbors.Add(found);
             }
 
             unvisited.Remove(current);
@@ -151,10 +138,8 @@ internal class Day12 : Day
         goalNode = allNodes.First(n => n.location == goal!);
     }
 
-    private long? FindDistance(DNode from, DNode to)
+    private void DijkstraFlood(DNode from, DNode to, bool reverse = false)
     {
-        long? distance = null;
-
         allNodes.ForEach(n =>
         {
             n.distance = null;
@@ -165,7 +150,19 @@ internal class Day12 : Day
         DNode? current = from;
         while (current != null)
         {
-            foreach (var n in current.neighbors.Where(n => unvisited.Contains(n)))
+            var currentHeight = heights![current.location.x][current.location.y];
+            var unvisitedNeighbors = current.neighbors.Where(n => unvisited.Contains(n));
+            if (!reverse)
+            {
+                unvisitedNeighbors =
+                    unvisitedNeighbors.Where(n => heights[n.location.x][n.location.y] <= currentHeight + 1);
+            }
+            else
+            {
+                unvisitedNeighbors =
+                    unvisitedNeighbors.Where(n => currentHeight <= heights[n.location.x][n.location.y] + 1);
+            }
+            foreach (var n in unvisitedNeighbors)
             {
                 if (n.distance == null || n.distance > current.distance + 1)
                 {
@@ -176,36 +173,23 @@ internal class Day12 : Day
             unvisited.Remove(current);
             if (current == to)
             {
-                distance = current.distance;
                 break;
             }
 
             current = unvisited.MinBy(n => n.distance);
         }
-
-        return distance;
     }
 
     internal override string Part1()
     {
-        var dist = FindDistance(startNode!, goalNode!);
-
-        return $"Shortest distance from start to end: <+white>{dist ?? -1}";
+        DijkstraFlood(startNode!, goalNode!);
+        return $"Shortest distance from start to end: <+white>{goalNode!.distance}";
     }
 
     internal override string Part2()
     {
-        long? shortestDist = null;
-        var aNodes = allNodes.Where(n => heights![n.location.x][n.location.y] == 0);
-        foreach (var n in aNodes)
-        {
-            var dist = FindDistance(n, goalNode!);
-            if (shortestDist == null || dist < shortestDist)
-            {
-                shortestDist = dist;
-            }
-        }
-
-        return $"Shortest distance from any minimum-height point to end: <+white>{shortestDist}";
+        DijkstraFlood(goalNode!, startNode!, true);
+        var shortest = allNodes.Where(n => n.distance != null && heights![n.location.x][n.location.y] == 0).MinBy(n => n.distance);
+        return $"Shortest distance from any minimum-height point to end: <+white>{shortest!.distance}";
     }
 }
