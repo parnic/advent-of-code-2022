@@ -116,7 +116,7 @@ internal class Day15 : Day
                 pt += dir;
             }
 
-            dir.x = 1;
+            dir = new ivec2(1, dir.y);
             while (answer == null)
             {
                 pointsTested++;
@@ -134,7 +134,7 @@ internal class Day15 : Day
                 pt += dir;
             }
 
-            dir.y = -1;
+            dir = new ivec2(dir.x, -1);
             while (answer == null)
             {
                 pointsTested++;
@@ -152,7 +152,7 @@ internal class Day15 : Day
                 pt += dir;
             }
 
-            dir.x = -1;
+            dir = new ivec2(-1, dir.y);
             while (answer == null)
             {
                 pointsTested++;
