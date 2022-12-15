@@ -43,7 +43,7 @@ internal class Day15 : Day
 
     internal override string Part1()
     {
-        int interestedY = 10;
+        int interestedY = 2000000;
         HashSet<ivec2> emptySpace = new();
         for (int i = 0; i < knownSensors.Count; i++)
         {
