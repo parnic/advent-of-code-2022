@@ -20,7 +20,7 @@ internal class Day15 : Day
         }
     }
 
-    private bool IsReachableFromSensor(ivec2 sensor, int maxDist, ivec2 point)
+    private bool IsReachableFromSensor(ivec2 sensor, long maxDist, ivec2 point)
     {
         return point.ManhattanDistanceTo(sensor) <= maxDist;
     }

@@ -2,8 +2,8 @@
 
 public struct ivec2 : IEquatable<ivec2>, IComparable<ivec2>, IComparable
 {
-    public readonly int x = 0;
-    public readonly int y = 0;
+    public readonly long x = 0;
+    public readonly long y = 0;
 
     public static readonly ivec2 ZERO = new ivec2(0, 0);
     public static readonly ivec2 ONE = new ivec2(1, 1);
@@ -15,16 +15,16 @@ public struct ivec2 : IEquatable<ivec2>, IComparable<ivec2>, IComparable
     public static readonly ivec2[] FOURWAY = {RIGHT, LEFT, UP, DOWN};
     public static readonly ivec2[] EIGHTWAY = {UP, UP + RIGHT, RIGHT, RIGHT + DOWN, DOWN, DOWN + LEFT, LEFT, LEFT + UP};
 
-    public ivec2(int xv, int yv)
+    public ivec2(long xv, long yv)
     {
         x = xv;
         y = yv;
     }
 
     public bool IsZero() => x == 0 && y == 0;
-    public int Sum => x + y;
-    public int Product => x * y;
-    public int MaxElement => System.Math.Max(x, y);
+    public long Sum => x + y;
+    public long Product => x * y;
+    public long MaxElement => System.Math.Max(x, y);
 
     public ivec2 GetRotatedLeft() => new ivec2(y, -x);
     public void RotateLeft() => this = GetRotatedLeft();
@@ -32,12 +32,12 @@ public struct ivec2 : IEquatable<ivec2>, IComparable<ivec2>, IComparable
     public ivec2 GetRotatedRight() => new ivec2(-y, x);
     public void RotateRight() => this = GetRotatedRight();
 
-    public int Dot(ivec2 v) => (x * v.x) + (y * v.y);
-    public int LengthSquared => (x * x) + (y * y);
+    public long Dot(ivec2 v) => (x * v.x) + (y * v.y);
+    public long LengthSquared => (x * x) + (y * y);
     public float Length => MathF.Sqrt(LengthSquared);
 
-    public int ManhattanDistance => Abs(this).Sum;
-    public int ManhattanDistanceTo(ivec2 other) => System.Math.Abs(x - other.x) + System.Math.Abs(y - other.y);
+    public long ManhattanDistance => Abs(this).Sum;
+    public long ManhattanDistanceTo(ivec2 other) => System.Math.Abs(x - other.x) + System.Math.Abs(y - other.y);
 
     public ivec2 GetBestDirectionTo(ivec2 p)
     {
@@ -58,16 +58,16 @@ public struct ivec2 : IEquatable<ivec2>, IComparable<ivec2>, IComparable
         return this + dir;
     }
 
-    public int this[int i] => (i == 0) ? x : y;
+    public long this[long i] => (i == 0) ? x : y;
 
     public static ivec2 operator +(ivec2 v) => v;
     public static ivec2 operator -(ivec2 v) => new ivec2(-v.x, -v.y);
     public static ivec2 operator +(ivec2 a, ivec2 b) => new ivec2(a.x + b.x, a.y + b.y);
     public static ivec2 operator -(ivec2 a, ivec2 b) => new ivec2(a.x - b.x, a.y - b.y);
     public static ivec2 operator *(ivec2 a, ivec2 b) => new ivec2(a.x * b.x, a.y * b.y);
-    public static ivec2 operator *(int a, ivec2 v) => new ivec2(a * v.x, a * v.y);
-    public static ivec2 operator *(ivec2 v, int a) => new ivec2(a * v.x, a * v.y);
-    public static ivec2 operator /(ivec2 v, int a) => new ivec2(v.x / a, v.y / a);
+    public static ivec2 operator *(long a, ivec2 v) => new ivec2(a * v.x, a * v.y);
+    public static ivec2 operator *(ivec2 v, long a) => new ivec2(a * v.x, a * v.y);
+    public static ivec2 operator /(ivec2 v, long a) => new ivec2(v.x / a, v.y / a);
     public static bool operator ==(ivec2 a, ivec2 b) => (a.x == b.x) && (a.y == b.y);
     public static bool operator !=(ivec2 a, ivec2 b) => (a.x != b.x) || (a.y != b.y);
     public static bool operator <(ivec2 a, ivec2 b) => (a.x < b.x) && (a.y < b.y);
@@ -114,10 +114,10 @@ public struct ivec2 : IEquatable<ivec2>, IComparable<ivec2>, IComparable
 
     public static ivec2 Abs(ivec2 v) => new ivec2(System.Math.Abs(v.x), System.Math.Abs(v.y));
 
-    public static ivec2 Mod(ivec2 val, int den)
+    public static ivec2 Mod(ivec2 val, long den)
     {
-        int x = val.x % den;
-        int y = val.y % den;
+        long x = val.x % den;
+        long y = val.y % den;
 
         if (x < 0)
         {
@@ -132,13 +132,13 @@ public struct ivec2 : IEquatable<ivec2>, IComparable<ivec2>, IComparable
         return new ivec2(x, y);
     }
 
-    public static int Dot(ivec2 a, ivec2 b) => (a.x * b.x) + (a.y * b.y);
+    public static long Dot(ivec2 a, ivec2 b) => (a.x * b.x) + (a.y * b.y);
 
     public static ivec2 Parse(string s)
     {
         string[] parts = s.Split(',', 2);
-        int x = int.Parse(parts[0]);
-        int y = int.Parse(parts[1]);
+        long x = long.Parse(parts[0]);
+        long y = long.Parse(parts[1]);
         return new ivec2(x, y);
     }
 
