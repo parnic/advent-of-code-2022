@@ -2,8 +2,8 @@
 
 public struct ivec2 : IEquatable<ivec2>, IComparable<ivec2>, IComparable
 {
-    public int x = 0;
-    public int y = 0;
+    public readonly int x = 0;
+    public readonly int y = 0;
 
     public static readonly ivec2 ZERO = new ivec2(0, 0);
     public static readonly ivec2 ONE = new ivec2(1, 1);
@@ -58,21 +58,7 @@ public struct ivec2 : IEquatable<ivec2>, IComparable<ivec2>, IComparable
         return this + dir;
     }
 
-    public int this[int i]
-    {
-        get => (i == 0) ? x : y;
-        set
-        {
-            if (i == 0)
-            {
-                x = value;
-            }
-            else
-            {
-                y = value;
-            }
-        }
-    }
+    public int this[int i] => (i == 0) ? x : y;
 
     public static ivec2 operator +(ivec2 v) => v;
     public static ivec2 operator -(ivec2 v) => new ivec2(-v.x, -v.y);
