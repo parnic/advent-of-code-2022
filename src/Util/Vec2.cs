@@ -37,7 +37,7 @@ public struct ivec2 : IEquatable<ivec2>, IComparable<ivec2>, IComparable
     public float Length => MathF.Sqrt(LengthSquared);
 
     public int ManhattanDistance => Abs(this).Sum;
-    public int ManhattanDistanceTo(ivec2 other) => (this - other).ManhattanDistance;
+    public int ManhattanDistanceTo(ivec2 other) => System.Math.Abs(x - other.x) + System.Math.Abs(y - other.y);
 
     public ivec2 GetBestDirectionTo(ivec2 p)
     {
