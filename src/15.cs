@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Text.RegularExpressions;
 using aoc2022.Util;
+using Math = System.Math;
 
 namespace aoc2022;
 
@@ -44,45 +45,25 @@ internal class Day15 : Day
     internal override string Part1()
     {
         int interestedY = 2000000;
-        HashSet<ivec2> emptySpace = new();
+        HashSet<long> emptySpace = new(10_000_000);
         for (int i = 0; i < knownSensors.Count; i++)
         {
             var s = knownSensors[i];
             var b = knownBeacons[i];
             var dist = s.ManhattanDistanceTo(b);
 
-            for (int j = 0; ; j++)
+            var yDist = Math.Abs(interestedY - s.y);
+            var xWidth = dist - yDist;
+            if (xWidth >= 0)
             {
-                var testVec = new ivec2(s.x + j, interestedY);
-                if (testVec.ManhattanDistanceTo(s) <= dist)
+                for (long j = s.x - xWidth; j <= s.x + xWidth; j++)
                 {
-                    if (!knownBeacons.Contains(testVec))
-                    {
-                        emptySpace.Add(testVec);
-                    }
-                }
-                else
-                {
-                    break;
-                }
-            }
-            for (int j = 0; ; j++)
-            {
-                var testVec = new ivec2(s.x - j, interestedY);
-                if (testVec.ManhattanDistanceTo(s) <= dist)
-                {
-                    if (!knownBeacons.Contains(testVec))
-                    {
-                        emptySpace.Add(testVec);
-                    }
-                }
-                else
-                {
-                    break;
+                    emptySpace.Add(j);
                 }
             }
         }
 
+        knownBeacons.Where(b => b.y == interestedY).ForEach(b => emptySpace.Remove(b.x));
         return $"Empty spaces at y={interestedY:N0}: <+white>{emptySpace.Count}";
     }
 
