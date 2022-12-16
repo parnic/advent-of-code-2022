@@ -1,5 +1,6 @@
 using aoc2022;
 
+using aoc2022.Timer t = new("Full program");
 var types = System.Reflection.Assembly
              .GetExecutingAssembly()
              .GetTypes()
@@ -9,7 +10,7 @@ var types = System.Reflection.Assembly
 bool runAll = false;
 bool? runPart1 = null;
 bool? runPart2 = null;
-string? desiredDay = null;
+List<string> desiredDays = new();
 foreach (var arg in args)
 {
     if (arg.Equals("-part1", StringComparison.CurrentCultureIgnoreCase))
@@ -26,7 +27,7 @@ foreach (var arg in args)
     }
     else
     {
-        desiredDay = arg;
+        desiredDays.Add(arg);
     }
 }
 
@@ -46,23 +47,32 @@ if (runAll)
 }
 else
 {
-    Day? day = null;
-    if (string.IsNullOrEmpty(desiredDay))
+    if (desiredDays.Count == 0)
     {
-        day = (Day)Activator.CreateInstance(types.Last())!;
+        desiredDays.Add("");
     }
-    else
+
+    foreach (var desiredDay in desiredDays)
     {
-        var type = types.FirstOrDefault(x => x.Name == $"Day{desiredDay.PadLeft(2, '0')}");
-        if (type == null)
+        Day? day = null;
+        if (string.IsNullOrEmpty(desiredDay))
         {
-            Logger.Log($"Unknown day <cyan>{desiredDay}<r>");
+            day = (Day) Activator.CreateInstance(types.Last())!;
         }
         else
         {
-            day = (Day?)Activator.CreateInstance(type);
+            var type = types.FirstOrDefault(x => x.Name == $"Day{desiredDay.PadLeft(2, '0')}");
+            if (type == null)
+            {
+                Logger.Log($"Unknown day <cyan>{desiredDay}<r>");
+            }
+            else
+            {
+                day = (Day?) Activator.CreateInstance(type);
+            }
         }
+
+        day?.Go(runPart1 ?? true, runPart2 ?? true);
+        day?.Dispose();
     }
-    day?.Go(runPart1 ?? true, runPart2 ?? true);
-    day?.Dispose();
 }
