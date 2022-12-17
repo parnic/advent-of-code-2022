@@ -2,8 +2,8 @@
 
 public struct ivec2 : IEquatable<ivec2>, IComparable<ivec2>, IComparable
 {
-    public readonly long x = 0;
-    public readonly long y = 0;
+    public long x = 0;
+    public long y = 0;
 
     public static readonly ivec2 ZERO = new ivec2(0, 0);
     public static readonly ivec2 ONE = new ivec2(1, 1);
