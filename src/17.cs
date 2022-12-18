@@ -1,4 +1,5 @@
 ﻿using aoc2022.Util;
+using Math = System.Math;
 
 namespace aoc2022;
 
@@ -146,10 +147,10 @@ internal class Day17 : Day
         HashSet<ivec2> grid = new();
         List<long> heightDeltasPerStep = new();
         long jetSteps = 0;
+        var maxHeight = 0L;
         for (long idx = 0; settledRocks < 10000; idx++)
         {
             var rockIdx = (int)(idx % rocks.Length);
-            var maxHeight = grid.Count > 0 ? grid.MaxBy(v => v.y).y + 1 : 0;
             var rockHeight = rocks[rockIdx].MaxBy(v => v.y).y;
             var rockPos = new ivec2(2, maxHeight + rockHeight + 3);
             bool settled = false;
@@ -184,28 +185,50 @@ internal class Day17 : Day
 
                 if (settled)
                 {
+                    var highestAdded = maxHeight;
                     foreach (var pt in rocks[rockIdx])
                     {
-                        grid.Add(rockPos + new ivec2(pt.x, -pt.y));
+                        var v2 = rockPos + new ivec2(pt.x, -pt.y);
+                        highestAdded = Math.Max(v2.y + 1, highestAdded);
+                        grid.Add(v2);
                     }
 
                     settledRocks++;
 
-                    var newMaxHeight = grid.MaxBy(v => v.y).y + 1;
-                    heightDeltasPerStep.Add(newMaxHeight - maxHeight);
+                    heightDeltasPerStep.Add(highestAdded - maxHeight);
+                    maxHeight = highestAdded;
                 }
             }
         }
 
         int cycleSize = 0;
         int skip = 0;
-        for (int jumpAhead = 250; jumpAhead < 500 && skip == 0; jumpAhead++)
+        for (int jumpAhead = 300; jumpAhead < 500 && skip == 0; jumpAhead++)
         {
-            var skipped = heightDeltasPerStep.Skip(jumpAhead);
-            for (int cycleLen = 100; cycleLen < heightDeltasPerStep.Count / 4; cycleLen++)
+            for (int cycleLen = 10; cycleLen < heightDeltasPerStep.Count / 3; cycleLen++)
             {
-                var chunked = skipped.Chunk(cycleLen);
-                if (chunked.All(c => c.Length < cycleLen || c.SequenceEqual(chunked.First())))
+                var match = true;
+                // if at least 3 chunks in a row match, we found our cycle. probably.
+                for (int chunk = 1; chunk < 3 && match; chunk++)
+                {
+                    for (int h = 0; h < cycleLen; h++)
+                    {
+                        var firstIdx = jumpAhead + h;
+                        var secondIdx = jumpAhead + h + (cycleLen * chunk);
+                        if (heightDeltasPerStep.Count <= secondIdx)
+                        {
+                            match = false;
+                            break;
+                        }
+                        if (heightDeltasPerStep[firstIdx] != heightDeltasPerStep[secondIdx])
+                        {
+                            match = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (match)
                 {
                     skip = jumpAhead;
                     cycleSize = cycleLen;
@@ -214,7 +237,7 @@ internal class Day17 : Day
             }
         }
 
-        if (skip == 0)
+        if (skip == 0 || cycleSize == 0)
         {
             throw new Exception("cycle not found");
         }
@@ -222,11 +245,9 @@ internal class Day17 : Day
         var baseHeight = heightDeltasPerStep.Take(skip).Sum();
         var chunkHeight = heightDeltasPerStep.Skip(skip).Take(cycleSize).Sum();
         var cumulativeHeight = baseHeight;
-        long simmed;
-        for (simmed = skip; simmed + cycleSize < 1000000000000; simmed += cycleSize)
-        {
-            cumulativeHeight += chunkHeight;
-        }
+        long numSims = (1000000000000 - skip) / cycleSize;
+        cumulativeHeight += chunkHeight * numSims;
+        long simmed = skip + (numSims * cycleSize);
 
         var finalChunkHeight = heightDeltasPerStep.Skip(skip).Take((int)(1000000000000 - simmed)).Sum();
         cumulativeHeight += finalChunkHeight;
