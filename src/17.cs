@@ -7,6 +7,15 @@ internal class Day17 : Day
 {
     private List<bool> jetPatterns = new();
 
+    private ivec2[] rockSizes =
+    {
+        new ivec2(4, 1),
+        new ivec2(3, 3),
+        new ivec2(3, 3),
+        new ivec2(1, 4),
+        new ivec2(2, 2),
+    };
+
     private ivec2[][] rocks =
     {
         new[]{
@@ -56,8 +65,8 @@ internal class Day17 : Day
     private bool canMove(int rockIdx, ivec2 rockPos, ICollection<ivec2> grid, ivec2 direction)
     {
         var rock = rocks[rockIdx];
-        var rockWidth = rock.MaxBy(v => v.x).x + 1;
-        var rockHeight = rock.MaxBy(v => v.y).y;
+        var rockWidth = rockSizes[rockIdx].x;
+        var rockHeight = rockSizes[rockIdx].y - 1;
         var result = rockPos + direction;
         if (result.x < 0)
         {
@@ -89,10 +98,10 @@ internal class Day17 : Day
         int settledRocks = 0;
         HashSet<ivec2> grid = new();
         int jetSteps = 0;
+        var maxHeight = 0L;
         for (int idx = 0; settledRocks < 2022; idx++)
         {
             var rockIdx = idx % rocks.Length;
-            var maxHeight = grid.Count > 0 ? grid.MaxBy(v => v.y).y + 1 : 0;
             var rockHeight = rocks[rockIdx].MaxBy(v => v.y).y;
             var rockPos = new ivec2(2, maxHeight + rockHeight + 3);
             bool settled = false;
@@ -127,18 +136,21 @@ internal class Day17 : Day
 
                 if (settled)
                 {
+                    var highestAdded = maxHeight;
                     foreach (var pt in rocks[rockIdx])
                     {
-                        grid.Add(rockPos + new ivec2(pt.x, -pt.y));
+                        var v2 = rockPos + new ivec2(pt.x, -pt.y);
+                        highestAdded = Math.Max(v2.y + 1, highestAdded);
+                        grid.Add(v2);
                     }
 
                     settledRocks++;
+                    maxHeight = highestAdded;
                 }
             }
         }
 
-        var finalMaxHeight = grid.MaxBy(v => v.y).y + 1;
-        return $"After <green>2022<+black> rocks, tower height is: <+white>{finalMaxHeight}";
+        return $"After <green>2022<+black> rocks, tower height is: <+white>{maxHeight}";
     }
 
     internal override string Part2()
