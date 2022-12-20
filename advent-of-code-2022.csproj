@@ -81,6 +81,7 @@
 	  <None Remove="inputs\20.txt" />
 	  <EmbeddedResource Include="inputs\20.txt" />
 	  <None Remove="inputs\21.txt" />
+	  <EmbeddedResource Include="inputs\20a.txt" />
 	  <EmbeddedResource Include="inputs\21.txt" />
 	  <None Remove="inputs\22.txt" />
 	  <EmbeddedResource Include="inputs\22.txt" />

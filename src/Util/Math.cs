@@ -43,4 +43,19 @@ public static class Math
     {
         return (a * b) / GCD(a, b);
     }
+
+    public static long Modulo(long numer, long denom) {
+        // long q = numer / denom;
+        long r = numer % denom;
+        if (r < 0) {
+            if (denom > 0) {
+                // q = q - 1;
+                r = r + denom;
+            } else {
+                // q = q + 1;
+                r = r - denom;
+            }
+        }
+        return r;
+    }
 }
