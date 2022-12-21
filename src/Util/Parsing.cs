@@ -46,6 +46,7 @@ public static class Parsing
 
         var filename = $"inputs/{inputName}.txt";
         if (File.Exists(filename))
+        if (Directory.Exists(Path.GetDirectoryName(filename)!) && File.Exists(filename))
         {
             foreach (var line in File.ReadLines(filename))
             {
