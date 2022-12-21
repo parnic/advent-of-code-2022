@@ -97,13 +97,13 @@ internal class Day21 : Day
     {
         var result = getResultFromMonkey("root");
 
-        return $"<+white>{result}";
+        return $"Root monkey yells: <+white>{result}";
     }
 
     internal override string Part2()
     {
         var result = getRequiredHumnResult("root");
 
-        return $"<+white>{result}";
+        return $"To get equivalence, Human's number must be: <+white>{result}";
     }
 }
