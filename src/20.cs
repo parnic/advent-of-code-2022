@@ -2,28 +2,12 @@
 
 internal class Day20 : Day
 {
-    private List<(int num, int origIdx)> nums = new();
+    private readonly List<(long num, int origIdx)> nums = new();
     internal override void Parse()
     {
         foreach (var line in Util.Parsing.ReadAllLines("20"))
         {
-            nums.Add((int.Parse(line), nums.Count));
-        }
-    }
-
-    private static void mix(List<(int num, int origIdx)> mixedNums, IList<(int num, int origIdx)> origNums)
-    {
-        for (int i = 0; i < origNums.Count; i++)
-        {
-            if (origNums[i].num == 0)
-            {
-                continue;
-            }
-
-            var idx = mixedNums.FindIndex(n => n.origIdx == origNums[i].origIdx);
-            mixedNums.RemoveAt(idx);
-            var newIdx = Util.Math.Modulo(idx + origNums[i].num, mixedNums.Count);
-            mixedNums.Insert((int)newIdx, origNums[i]);
+            nums.Add((long.Parse(line), nums.Count));
         }
     }
 
@@ -45,7 +29,7 @@ internal class Day20 : Day
 
     internal override string Part1()
     {
-        var mixedNums = new List<(int num, int origIdx)>(nums);
+        var mixedNums = new List<(long num, int origIdx)>(nums);
         mix(mixedNums, nums);
 
         var zeroIdx = mixedNums.FindIndex(n => n.num == 0);
