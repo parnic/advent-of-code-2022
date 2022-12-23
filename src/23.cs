@@ -31,9 +31,10 @@ internal class Day23 : Day
         }
     }
 
-    private static List<(ivec2 curr, ivec2 proposed)> ConsiderMove(ICollection<ivec2> positions, int orderStart)
+    private static IEnumerable<(ivec2 curr, ivec2 next)> ConsiderMove(ICollection<ivec2> positions, int orderStart)
     {
-        List<(ivec2 curr, ivec2 proposed)> considerations = new(positions.Count);
+        Dictionary<ivec2, ivec2> considerations = new(positions.Count);
+        Dictionary<ivec2, int> dupes = new();
 
         foreach (var elfPos in positions)
         {
@@ -47,13 +48,26 @@ internal class Day23 : Day
                 var dirs = dirOrder[(i + orderStart) % dirOrder.Length];
                 if (!dirs.Any(d => positions.Contains(d + elfPos)))
                 {
-                    considerations.Add((elfPos, elfPos + dirs[0]));
+                    var v = elfPos + dirs[0];
+                    if (!dupes.ContainsKey(v))
+                    {
+                        dupes.Add(v, 0);
+                    }
+
+                    dupes[v]++;
+                    considerations.Add(elfPos, v);
                     break;
                 }
             }
         }
 
-        return considerations;
+        foreach (var c in considerations)
+        {
+            if (dupes[c.Value] == 1)
+            {
+                yield return (c.Key, c.Value);
+            }
+        }
     }
 
     private static int PlayOut(ICollection<ivec2> positions, int? maxRounds = null)
@@ -67,30 +81,41 @@ internal class Day23 : Day
                 break;
             }
 
-            for (int i = 0; i < considerations.Count; i++)
-            {
-                bool bDuped = false;
-                for (int j = i + 1; j < considerations.Count; j++)
-                {
-                    if (considerations[i].proposed == considerations[j].proposed)
-                    {
-                        bDuped = true;
-                        considerations.RemoveAt(j);
-                        j--;
-                    }
-                }
-
-                if (bDuped)
-                {
-                    considerations.RemoveAt(i);
-                    i--;
-                }
-            }
+            // for (int i = 0; i < considerations.Count; i++)
+            // {
+            //     bool bDuped = false;
+            //     foreach (var c in considerations.Skip(i + 1).Where(c => c.Value == considerations.ElementAt(i).Value))
+            //     {
+            //         bDuped = true;
+            //         considerations.Remove(c.Key);
+            //     }
+            //
+            //     if (bDuped)
+            //     {
+            //         considerations.Remove(considerations.ElementAt(i).Key);
+            //         i--;
+            //     }
+            //     // for (int j = i + 1; j < considerations.Count; j++)
+            //     // {
+            //     //     if (considerations[i].proposed == considerations[j].proposed)
+            //     //     {
+            //     //         bDuped = true;
+            //     //         considerations.RemoveAt(j);
+            //     //         j--;
+            //     //     }
+            //     // }
+            //     //
+            //     // if (bDuped)
+            //     // {
+            //     //     considerations.RemoveAt(i);
+            //     //     i--;
+            //     // }
+            // }
 
             foreach (var move in considerations)
             {
                 positions.Remove(move.curr);
-                positions.Add(move.proposed);
+                positions.Add(move.next);
             }
         }
 
