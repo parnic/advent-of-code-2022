@@ -47,6 +47,16 @@ internal abstract class Day : IDisposable
         }
     }
 
+    internal int GetDayNum()
+    {
+        if (int.TryParse(GetType().Name["Day".Length..], out int dayNum))
+        {
+            return dayNum;
+        }
+
+        return -1;
+    }
+
     internal virtual void Parse() { }
     internal virtual string Part1() { return string.Empty; }
     internal virtual string Part2() { return string.Empty; }

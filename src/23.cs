@@ -17,7 +17,7 @@ internal class Day23 : Day
 
     internal override void Parse()
     {
-        var lines = Parsing.ReadAllLines("23").ToImmutableList();
+        var lines = Parsing.ReadAllLines($"{GetDayNum()}").ToImmutableList();
         for (int row = 0; row < lines.Count; row++)
         {
             var line = lines[row];

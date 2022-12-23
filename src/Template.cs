@@ -5,7 +5,7 @@ internal class DayTemplate : Day
 {
     internal override void Parse()
     {
-        var lines = Util.Parsing.ReadAllLines("##");
+        var lines = Util.Parsing.ReadAllLines($"{GetDayNum()}");
     }
 
     internal override string Part1()
