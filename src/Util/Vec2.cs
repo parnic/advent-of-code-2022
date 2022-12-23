@@ -58,6 +58,22 @@ public struct ivec2 : IEquatable<ivec2>, IComparable<ivec2>, IComparable
         return this + dir;
     }
 
+    public IEnumerable<ivec2> GetOrthogonalNeighbors()
+    {
+        foreach (var dir in FOURWAY)
+        {
+            yield return this + dir;
+        }
+    }
+
+    public IEnumerable<ivec2> GetNeighbors()
+    {
+        foreach (var dir in EIGHTWAY)
+        {
+            yield return this + dir;
+        }
+    }
+
     public long this[long i] => (i == 0) ? x : y;
 
     public static ivec2 operator +(ivec2 v) => v;
