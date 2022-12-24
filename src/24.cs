@@ -192,6 +192,7 @@ internal class Day24 : Day
     private static int getMinSteps(ivec2 start, ivec2 dest, int startGridState = 0)
     {
         Queue<(ivec2 pos, int steps)> states = new();
+        HashSet<ivec3> visited = new();
         states.Enqueue((start, 0));
 
         int minSteps = int.MaxValue;
@@ -208,10 +209,11 @@ internal class Day24 : Day
             // check if we can wait
             if (next[q.pos.y][q.pos.x] == (int) cellType.open)
             {
-                var nextState = (pos: q.pos, steps: q.steps + 1);
-                if (!states.Contains(nextState))
+                var visitedVec = new ivec3(q.pos.x, q.pos.y, q.steps + 1);
+                if (!visited.Contains(visitedVec))
                 {
-                    states.Enqueue(nextState);
+                    states.Enqueue((q.pos, q.steps + 1));
+                    visited.Add(visitedVec);
                 }
             }
 
@@ -235,10 +237,11 @@ internal class Day24 : Day
 
                 if (next[n.y][n.x] == (int) cellType.open)
                 {
-                    var nextState = (pos: n, steps: q.steps + 1);
-                    if (!states.Contains(nextState))
+                    var visitedVec = new ivec3(n.x, n.y, q.steps + 1);
+                    if (!visited.Contains(visitedVec))
                     {
-                        states.Enqueue(nextState);
+                        states.Enqueue((n, q.steps + 1));
+                        visited.Add(visitedVec);
                     }
                 }
             }
