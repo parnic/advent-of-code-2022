@@ -22,6 +22,10 @@
     "all days part 2": {
       "commandName": "Project",
       "commandLineArgs": "all -part2"
+    },
+    "specific day": {
+      "commandName": "Project",
+      "commandLineArgs": "16"
     }
   }
 }
