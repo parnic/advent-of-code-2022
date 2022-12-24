@@ -218,8 +218,9 @@ internal class Day24 : Day
             }
 
             // queue up all neighbor possibilities
-            foreach (var n in q.pos.GetOrthogonalNeighbors())
+            foreach (var dir in ivec2.FOURWAY)
             {
+                var n = q.pos + dir;
                 if (n == dest)
                 {
                     if (q.steps + 1 < minSteps)
