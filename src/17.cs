@@ -113,21 +113,21 @@ internal class Day17 : Day
                 {
                     if (canMove(rockIdx, rockPos, grid, ivec2.RIGHT))
                     {
-                        rockPos.x++;
+                        rockPos = new ivec2(rockPos.x + 1, rockPos.y);
                     }
                 }
                 else
                 {
                     if (canMove(rockIdx, rockPos, grid, ivec2.LEFT))
                     {
-                        rockPos.x--;
+                        rockPos = new ivec2(rockPos.x - 1, rockPos.y);
                     }
                 }
 
                 // inverted up/down for this...
                 if (canMove(rockIdx, rockPos, grid, ivec2.UP))
                 {
-                    rockPos.y--;
+                    rockPos = new ivec2(rockPos.x, rockPos.y - 1);
                 }
                 else
                 {
@@ -174,21 +174,21 @@ internal class Day17 : Day
                 {
                     if (canMove(rockIdx, rockPos, grid, ivec2.RIGHT))
                     {
-                        rockPos.x++;
+                        rockPos = new ivec2(rockPos.x + 1, rockPos.y);
                     }
                 }
                 else
                 {
                     if (canMove(rockIdx, rockPos, grid, ivec2.LEFT))
                     {
-                        rockPos.x--;
+                        rockPos = new ivec2(rockPos.x - 1, rockPos.y);
                     }
                 }
 
                 // inverted up/down for this...
                 if (canMove(rockIdx, rockPos, grid, ivec2.UP))
                 {
-                    rockPos.y--;
+                    rockPos = new ivec2(rockPos.x, rockPos.y - 1);
                 }
                 else
                 {

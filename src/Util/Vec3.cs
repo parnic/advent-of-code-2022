@@ -1,10 +1,10 @@
 ﻿namespace aoc2022.Util;
 
-public struct ivec3 : IEquatable<ivec3>, IComparable<ivec3>, IComparable
+public readonly struct ivec3 : IEquatable<ivec3>, IComparable<ivec3>, IComparable
 {
-    public long x = 0;
-    public long y = 0;
-    public long z = 0;
+    public readonly long x = 0;
+    public readonly long y = 0;
+    public readonly long z = 0;
 
     public static readonly ivec3 ZERO = new ivec3(0, 0, 0);
     public static readonly ivec3 ONE = new ivec3(1, 1, 1);
@@ -31,10 +31,8 @@ public struct ivec3 : IEquatable<ivec3>, IComparable<ivec3>, IComparable
     public long MinElement => System.Math.Min(x, System.Math.Min(y, z));
 
     public ivec3 GetRotatedLeft() => new ivec3(y, -x, z);
-    public void RotateLeft() => this = GetRotatedLeft();
 
     public ivec3 GetRotatedRight() => new ivec3(-y, x, z);
-    public void RotateRight() => this = GetRotatedRight();
 
     public long Dot(ivec3 v) => (x * v.x) + (y * v.y) + (z * v.z);
     public long LengthSquared => (x * x) + (y * y) +  (z * z);

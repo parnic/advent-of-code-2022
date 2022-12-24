@@ -1,9 +1,9 @@
 ﻿namespace aoc2022.Util;
 
-public struct ivec2 : IEquatable<ivec2>, IComparable<ivec2>, IComparable
+public readonly struct ivec2 : IEquatable<ivec2>, IComparable<ivec2>, IComparable
 {
-    public long x = 0;
-    public long y = 0;
+    public readonly long x = 0;
+    public readonly long y = 0;
 
     public static readonly ivec2 ZERO = new ivec2(0, 0);
     public static readonly ivec2 ONE = new ivec2(1, 1);
@@ -27,10 +27,8 @@ public struct ivec2 : IEquatable<ivec2>, IComparable<ivec2>, IComparable
     public long MaxElement => System.Math.Max(x, y);
 
     public ivec2 GetRotatedLeft() => new ivec2(y, -x);
-    public void RotateLeft() => this = GetRotatedLeft();
 
     public ivec2 GetRotatedRight() => new ivec2(-y, x);
-    public void RotateRight() => this = GetRotatedRight();
 
     public long Dot(ivec2 v) => (x * v.x) + (y * v.y);
     public long LengthSquared => (x * x) + (y * y);

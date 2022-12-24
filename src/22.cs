@@ -536,11 +536,11 @@ internal class Day22 : Day
             {
                 if (inst.turn == 'R')
                 {
-                    facing.RotateRight();
+                    facing = facing.GetRotatedRight();
                 }
                 else if (inst.turn == 'L')
                 {
-                    facing.RotateLeft();
+                    facing = facing.GetRotatedLeft();
                 }
             }
         }
@@ -591,11 +591,11 @@ internal class Day22 : Day
             {
                 if (inst.turn == 'R')
                 {
-                    facing.RotateRight();
+                    facing = facing.GetRotatedRight();
                 }
                 else if (inst.turn == 'L')
                 {
-                    facing.RotateLeft();
+                    facing = facing.GetRotatedLeft();
                 }
             }
         }
