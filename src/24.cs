@@ -14,11 +14,15 @@ internal class Day24 : Day
         blizLeft = 1 << 4,
     }
 
-    private int[][]? grid;
+    private static int[][][] grids = Array.Empty<int[][]>();
     internal override void Parse()
     {
-        var lines = new List<string>(Util.Parsing.ReadAllLines($"{GetDayNum()}"));
-        grid = new int[lines.Count][];
+        var lines = new List<string>(Parsing.ReadAllLines($"{GetDayNum()}"));
+        var maxNumGrids = (int)Util.Math.LCM((ulong) lines.Count - 2, (ulong) lines[0].Length - 2);
+
+        grids = new int[maxNumGrids][][];
+
+        var grid = new int[lines.Count][];
         for (int row = 0; row < lines.Count; row++)
         {
             var line = lines[row];
@@ -36,6 +40,17 @@ internal class Day24 : Day
                     _ => throw new Exception(),
                 };
             }
+        }
+
+        for (int i = 0; i < maxNumGrids; i++)
+        {
+            if (i == 0)
+            {
+                grids[i] = grid;
+                continue;
+            }
+
+            grids[i] = advanceSim(grids[i - 1]);
         }
     }
 
@@ -174,28 +189,27 @@ internal class Day24 : Day
         return next;
     }
 
-    private static (int steps, int[][] gridState) getMinSteps(int[][] grid, ivec2 start, ivec2 dest)
+    private static int getMinSteps(ivec2 start, ivec2 dest, int startGridState = 0)
     {
-        Queue<(ivec2 pos, int[][] gridState, int steps)> states = new();
-        states.Enqueue((start, deepCopyGrid(grid), 0));
+        Queue<(ivec2 pos, int steps)> states = new();
+        states.Enqueue((start, 0));
 
-        int? minSteps = null;
-        int[][]? minGridState = null;
+        int minSteps = int.MaxValue;
 
         // render("Start:", p1grid);
         while (states.TryDequeue(out var q))
         {
-            if (minSteps != null && q.steps > minSteps)
+            if (q.steps > minSteps)
             {
                 continue;
             }
 
-            var next = advanceSim(q.gridState);
+            var next = grids[(startGridState + 1 + q.steps) % grids.Length];
             // check if we can wait
             if (next[q.pos.y][q.pos.x] == (int) cellType.open)
             {
-                var nextState = (pos: q.pos, next: next, steps: q.steps + 1);
-                if (!states.Any(s => s.pos == nextState.pos && s.steps == nextState.steps))
+                var nextState = (pos: q.pos, steps: q.steps + 1);
+                if (!states.Contains(nextState))
                 {
                     states.Enqueue(nextState);
                 }
@@ -206,10 +220,9 @@ internal class Day24 : Day
             {
                 if (n == dest)
                 {
-                    if (minSteps == null || q.steps + 1 < minSteps)
+                    if (q.steps + 1 < minSteps)
                     {
                         minSteps = q.steps + 1;
-                        minGridState = next;
                     }
 
                     continue;
@@ -222,8 +235,8 @@ internal class Day24 : Day
 
                 if (next[n.y][n.x] == (int) cellType.open)
                 {
-                    var nextState = (pos: n, next: next, steps: q.steps + 1);
-                    if (!states.Any(s => s.pos == nextState.pos && s.steps == nextState.steps))
+                    var nextState = (pos: n, steps: q.steps + 1);
+                    if (!states.Contains(nextState))
                     {
                         states.Enqueue(nextState);
                     }
@@ -233,15 +246,15 @@ internal class Day24 : Day
             // render($"After {i+1} minute{(i + 1 == 1 ? "" : "s")}:", p1grid);
         }
 
-        return (minSteps!.Value, minGridState!);
+        return minSteps;
     }
 
     internal override string Part1()
     {
         var start = new ivec2(1, 0);
-        var dest = new ivec2(grid![0].Length - 2, grid!.Length - 1);
+        var dest = new ivec2(grids[0][0].Length - 2, grids[0].Length - 1);
 
-        var (minSteps, _) = getMinSteps(grid!, start, dest);
+        var minSteps = getMinSteps(start, dest);
 
         return $"Minimum steps to reach the end: <+white>{minSteps}";
     }
@@ -249,12 +262,12 @@ internal class Day24 : Day
     internal override string Part2()
     {
         var start = new ivec2(1, 0);
-        var dest = new ivec2(grid![0].Length - 2, grid!.Length - 1);
+        var dest = new ivec2(grids[0][0].Length - 2, grids[0].Length - 1);
 
-        var toEndOnce = getMinSteps(grid!, start, dest);
-        var backToStart = getMinSteps(toEndOnce.gridState, dest, start);
-        var toEndAgain = getMinSteps(backToStart.gridState, start, dest);
+        var toEndOnce = getMinSteps(start, dest);
+        var backToStart = getMinSteps(dest, start, toEndOnce);
+        var toEndAgain = getMinSteps(start, dest, toEndOnce + backToStart);
 
-        return $"Minimum steps to go there and back again: <+white>{toEndOnce.steps + backToStart.steps + toEndAgain.steps}";
+        return $"Minimum steps to go there and back again = {toEndOnce} + {backToStart} + {toEndAgain} = <+white>{toEndOnce + backToStart + toEndAgain}";
     }
 }
