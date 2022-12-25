@@ -22,6 +22,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <EmbeddedResource Include="inputs\25a.txt" />
 	  <None Remove="inputs\01.txt" />
 	  <None Remove="inputs\01a.txt" />
 	  <EmbeddedResource Include="inputs\01.txt" />
